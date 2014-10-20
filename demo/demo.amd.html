@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+	<html lang="pl" dir="ltr">
+		<head>
+			<meta charset="UTF-8">
+			<title>Ehhhh</title>
+			<link rel="stylesheet" href="../uf.css">
+		</head>
+		<body>
+			<form id="form">
+				<fieldset>
+					<dl>
+						<dt id="type-desc">Typ pojazdu</dt>
+						<dd>
+							<ul aria-labelledby="type-desc">
+								<li><label><input type="radio" name="opcja1" value="1" data-for="f1" checked> Typ 1</label></li>
+								<li><label><input type="radio" name="opcja1" value="2" data-for="f2"> Typ 2</label></li>
+								<li><label><input type="radio" name="opcja1" value="3" data-for=""> Typ 3</label></li>
+							</ul>
+						</dd>
+					</dl>
+				</fieldset>
+
+				<fieldset id="f1" class="collapsible">
+					<dl>
+						<dt><label for="f1-name">Nazwa pojazdu typu 1</label></dt>
+						<dd><input type="text" name="name" id="f1-name"></dd>
+						<dt><label for="f1-select">Wybór</label></dt>
+						<dd>
+							<select name="select" id="f1-select">
+								<option value="" data-for="" selected>--------</option>
+								<option data-for="f3" value="1">Inny</option>
+							</select>
+							<label id="f3" class="collapsible">Jaki? <span class="collapsible-label">(wypełnił to pole tylko, jeśli w powyższym polu zaznaczyłeś odpowiedź "Inny"; w przeciwnym wypadku zostaw to pole puste)</span> <input type="text" name="inny"></label>
+						</dd>
+					</dl>
+				</fieldset>
+
+				<fieldset id="f2" class="collapsible">
+					<dl>
+						<dt><label for="f2-name">Imię</label></dt>
+						<dd><input type="text" name="yname" id="f2-name"></dd>
+						<dt><label for="f2-surname">Nazwisko</label></dt>
+						<dd><input type="text" name="surnname" id="f2-surname"></dd>
+					</dl>
+				</fieldset>
+
+				<fieldset>
+					<button type="submit">Wyślij</button>
+				</fieldset>
+			</form>
+			<script src="require.js"></script>
+			<script>require(['../uf'], function(UF)
+			{
+				new UF('#form');
+			});</script>
+		</body>
+	</html>
