@@ -32,29 +32,53 @@
 			this.collapsibles = tmp;
 			tmp = null;
 
+			this.shown = {}; //hash of all shown elements
+
 			elems.forEach(function(e)
 			{
 				this.handleInput(e, true);
-				//console.log('init elem', t.name, t.value, t.checked, t.selected, t.getAttribute('data-for'));
 			}, this);
 
 			elem.addEventListener('change', this.changeHandler.bind(this), false);
 			elem.addEventListener('select', this.changeHandler.bind(this), false);
 			elem.classList.add('uf');
 		}
-		,showCollapsible: function(id)
+		,showCollapsibles: function(ids)
 		{
-			var collapsible = this.collapsibles[id];
+			ids = ids.split(' ');
 
-			if(collapsible)
+			ids.forEach(function(id)
+			{
+				var collapsible = this.collapsibles[id];
+
+				if(!collapsible)
+					return;
+
 				this.collapsibles[id].classList.remove('collapsible--hidden');
-		}
-		,hideCollapsible: function(id)
-		{
-			var collapsible = this.collapsibles[id];
 
-			if(collapsible)
-				this.collapsibles[id].classList.add('collapsible--hidden');
+				if(typeof this.shown[id] != 'number')
+					this.shown[id] = 0;
+
+				++this.shown[id];
+			}, this);
+		}
+		,hideCollapsibles: function(ids)
+		{
+			ids = ids.split(' ');
+
+			ids.forEach(function(id)
+			{
+				var collapsible = this.collapsibles[id];
+
+				if(!collapsible)
+					return;
+
+				if(typeof this.shown[id] != 'number' || --this.shown[id] < 0)
+					this.shown[id] = 0;
+
+				if(this.shown[id] === 0)
+					this.collapsibles[id].classList.add('collapsible--hidden');
+			}, this);
 		}
 		,handleInput: function(input, init)
 		{
@@ -69,7 +93,7 @@
 					if(dataFor === null || e === excluded)
 						return;
 
-					this.hideCollapsible(dataFor);
+					this.hideCollapsibles(dataFor);
 				}, this);
 			}.bind(this);
 
@@ -81,7 +105,7 @@
 				case 'input':
 					var type = input.type;
 					if(['radio', 'checkbox'].indexOf(type) !== -1)
-						this[(input.checked ? 'show' : 'hide') + 'Collapsible'](dataFor);
+						this[(input.checked ? 'show' : 'hide') + 'Collapsibles'](dataFor);
 
 					if(!init && type === 'radio')
 					{
@@ -98,7 +122,7 @@
 					,dataFor = selected.getAttribute('data-for');
 
 					if(dataFor !== null)
-						this.showCollapsible(dataFor);
+						this.showCollapsibles(dataFor);
 
 					hideOther(options, selected);
 				break;

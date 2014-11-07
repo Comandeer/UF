@@ -58,10 +58,31 @@
 				</fieldset>
 
 				<fieldset>
+					<dl>
+						<dt>Many checkboxes, one collapsible</dt>
+						<dd>
+							<ul>
+								<li><label><input type="checkbox" name="many1" data-for="f5"> F5-1</label></li>
+								<li><label><input type="checkbox" name="many2" data-for="f5"> F5-2</label></li>
+								<li><label><input type="checkbox" name="many3" data-for="f5"> F5-3</label></li>
+							</ul>
+							<p id="f5" class="collapsible">Yay, collapsible</p>
+						</dd>
+						<dt>One checbkox, many collapsibles</dt>
+						<dd>
+							<label><input type="checkbox" name="one" data-for="f5 f6 f7 f8"></label>
+							<p id="f6" class="collapsible">One</p>
+							<p id="f7" class="collapsible">Two</p>
+							<p id="f8" class="collapsible">Three</p>
+						</dd>
+					</dl>
+				</fieldset>
+
+				<fieldset>
 					<button type="submit">Wyślij</button>
 				</fieldset>
 			</form>
 			<script src="../uf.js"></script>
-			<script>new UF('#form');</script>
+			<script>var uf = new UF('#form');</script>
 		</body>
 	</html>
